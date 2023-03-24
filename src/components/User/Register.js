@@ -22,8 +22,8 @@ export const RegisterUser = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formConfirmPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="confirmPassword" placeholder="Confirm Password"  autoComplete='on' />
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control type="password" placeholder="Confirm Password"  autoComplete='on' />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Register

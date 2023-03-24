@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
+
+import styles from './Home.module.css';
+
 export const Home = () => {
     return (
-        <section className="header">
-            <div className="overlay"></div>
-            <div className="header-content">
-                <h1 className="header-title">What Are Your Interests?</h1>
-                <p className="header-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt.</p>
+        <section>
+            <div className={styles.home}>
+                <h1 className="home-title">What Are Your Interests?</h1>
+                <p className="home-subtitle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel suscipit reprehenderit rerum rem iure illo quae beatae itaque? Quod beatae officiis consequuntur numquam quo, eius dolorem libero pariatur qui sed ea asperiores, veniam soluta voluptatem! Aspernatur similique id minima non pariatur, ut nobis neque nesciunt ex possimus cupiditate voluptatibus reiciendis.</p>
 
-                <button className="btn btn-theme-color modal-toggle"><i className="ti-control-play text-danger"></i> Watch Video</button>
+                <Link className="" to="/catalog">Browse themes</Link>
 
             </div>
         </section>
