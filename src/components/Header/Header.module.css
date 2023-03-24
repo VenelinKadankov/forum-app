@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.headerItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navItem{
+  padding: 0.5rem;
+  border-radius: 7px;
+  margin: 0 5px;
+  text-decoration: none;
+}
+
+.navItem:hover{
+  color: white;
+  background-color: #0d6efd;
+}
