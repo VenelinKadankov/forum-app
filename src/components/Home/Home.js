@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { TopicCard } from "../Topics/TopicCard";
 
 import styles from './Home.module.css';
 
-export const Home = () => {
+export const Home = ({ topics }) => {
     return (
         <section>
             <div className={styles.home}>
@@ -12,6 +13,10 @@ export const Home = () => {
                 <Link className="" to="/catalog">Browse themes</Link>
 
             </div>
+
+            {topics.map((topic) => (
+                <TopicCard key={topics.id} {...topic}></TopicCard>
+            ))}
         </section>
     );
 };
