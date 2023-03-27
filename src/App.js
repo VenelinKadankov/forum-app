@@ -11,25 +11,27 @@ import { RegisterUser } from './components/User/Register';
 import { LoginUser } from './components/User/Login';
 import { Footer } from './components/Footer/Footer';
 import { Catalog } from './components/Themes/Catalog';
-import { themeService } from './services/themeService';
+// import { themeService } from './services/themeService';
 
 import { serviceFactory } from './services/serviceFactory';
 
 function App() {
-    const service = themeService();
+    // const themeService = themeService();
+    const themeService =  serviceFactory('theme');
     const [themes, setThemes] = useState([]);
 
-    const genericService = serviceFactory('topic');
+    const topicService = serviceFactory('topic');
     const [topics, setTopics] = useState([]);
 
     useEffect(() => {
-        genericService.getAll().then(res => {
+        topicService.getAll()
+        .then(res => {
             setTopics(res);
         });
     }, []);
 
     useEffect(() => {
-        service.getAll()
+        themeService.getAll()
             .then(res => {
                 setThemes(res)
             });

@@ -21,10 +21,8 @@ export const serviceFactory = (typeService, token) => {
 
                 if (response) {
                     const result = Object.values(response);
-
                     return result;
                 }
-
             } catch (error) {
                 console.log('LOG FROM ERROR' + error);
             }

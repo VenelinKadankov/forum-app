@@ -15,7 +15,7 @@ export const Home = ({ topics }) => {
             </div>
 
             {topics.map((topic) => (
-                <TopicCard key={topics.id} {...topic}></TopicCard>
+                <TopicCard key={topic.id} topic={topic}></TopicCard>
             ))}
         </section>
     );
