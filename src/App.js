@@ -14,6 +14,7 @@ import { Catalog } from './components/Themes/Catalog';
 // import { themeService } from './services/themeService';
 
 import { serviceFactory } from './services/serviceFactory';
+import { Create } from './components/Themes/Create';
 
 function App() {
     // const themeService = themeService();
@@ -48,6 +49,7 @@ function App() {
                         <Route path='/register' element={<RegisterUser />}></Route>
                         <Route path='/login' element={<LoginUser />}></Route>
                         <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
+                        <Route path='/create' element={<Create />}></Route>
                     </Routes>
                 </div>
                 <Footer />

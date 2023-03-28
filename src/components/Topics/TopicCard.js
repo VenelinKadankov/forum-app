@@ -13,7 +13,7 @@ export const TopicCard = ({ topic }) => {
                 </Card.Text>
             </Card.Body>
             <Card.Body>
-                <Link to={`/topics/${topic.id}/themes`}>View themes in topic</Link>
+                <Link to={`/topics/${topic.id}/theme`}>View themes in topic</Link>
             </Card.Body>
         </Card>
     );
