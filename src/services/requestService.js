@@ -1,4 +1,4 @@
-const requester = async (token, method, url, data) => {
+const requester = async (token, method, url, data ) => {
     const options = {};
     options.method = method;
 

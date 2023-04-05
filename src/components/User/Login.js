@@ -1,27 +1,42 @@
-import { Button } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useForm } from '../../hooks/useForm';
 
 import styles from './Login.module.css';
 
+const initialValues = { username: '', password: '' };
+
 export const LoginUser = () => {
+    const { onLoginSubmit } = useAuthContext();
+    const { values, changeHandler, onSubmit } = useForm(initialValues, onLoginSubmit);
+
     return (
         <div className={styles.loginAreaFlex}>
-            <Form className={styles.loginArea}>
-                <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="username" placeholder="Enter username" autoComplete='on' />
-                </Form.Group>
+            <form className={styles.loginArea} method="POST" onSubmit={onSubmit}>
+                <div className="mb-3">
+                    <label>Username</label>
+                    <input className={styles.inputArea}
+                        name="username"
+                        type="text"
+                        value={values.username}
+                        onChange={changeHandler}
+                        autoComplete="on" />
+                </div>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" autoComplete='on' />
-                </Form.Group>
-                <Button variant="primary" type="submit">
+                <div className="mb-3">
+                    <label>Password</label>
+                    <input className={styles.inputArea}
+                        name="password"
+                        type="password"
+                        value={values.password}
+                        onChange={changeHandler}
+                        autoComplete="on" />
+                </div>
+                <button className={styles.loginbtn} variant="primary" type="submit">
                     Login
-                </Button>
+                </button>
                 <Link className={styles.goToRegister} to="/register">Register</Link>
-            </Form>
+            </form>
         </div>
     );
 }

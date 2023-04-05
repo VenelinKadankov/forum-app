@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,14 +10,13 @@ import { RegisterUser } from './components/User/Register';
 import { LoginUser } from './components/User/Login';
 import { Footer } from './components/Footer/Footer';
 import { Catalog } from './components/Themes/Catalog';
-// import { themeService } from './services/themeService';
 
 import { serviceFactory } from './services/serviceFactory';
 import { Create } from './components/Themes/Create';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
-    // const themeService = themeService();
-    const themeService =  serviceFactory('theme');
+    const themeService = serviceFactory('theme');
     const [themes, setThemes] = useState([]);
 
     const topicService = serviceFactory('topic');
@@ -26,9 +24,9 @@ function App() {
 
     useEffect(() => {
         topicService.getAll()
-        .then(res => {
-            setTopics(res);
-        });
+            .then(res => {
+                setTopics(res);
+            });
     }, []);
 
     useEffect(() => {
@@ -38,22 +36,30 @@ function App() {
             });
     }, []);
 
+    // const onLoginSubmit = (e) => {
+    //     console.log("SUBMITTED LOGIN");
+    // }
+
     return (
         <>
-            <div className="App">
-                <Header />
-                <div className="main">
-                    <Routes>
-                        <Route path='*' element={<h1>404</h1>} />
-                        <Route path='/' element={<Home topics={topics} />}></Route>
-                        <Route path='/register' element={<RegisterUser />}></Route>
-                        <Route path='/login' element={<LoginUser />}></Route>
-                        <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
-                        <Route path='/create' element={<Create />}></Route>
-                    </Routes>
+            <AuthProvider>
+
+                <div className="App">
+                    <Header />
+                    <div className="main">
+                        <Routes>
+                            <Route path='*' element={<h1>404</h1>} />
+                            <Route path='/' element={<Home topics={topics} />}></Route>
+                            <Route path='/register' element={<RegisterUser />}></Route>
+                            <Route path='/login' element={<LoginUser />}></Route>
+                            <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
+                            <Route path='/create' element={<Create />}></Route>
+                        </Routes>
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
+
+            </AuthProvider>
         </>
     );
 }
