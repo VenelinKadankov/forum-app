@@ -18,6 +18,7 @@ export const LoginUser = () => {
                     <input className={styles.inputArea}
                         name="username"
                         type="text"
+                        placeholder="JohnDoe"
                         value={values.username}
                         onChange={changeHandler}
                         autoComplete="on" />
@@ -28,6 +29,7 @@ export const LoginUser = () => {
                     <input className={styles.inputArea}
                         name="password"
                         type="password"
+                        placeholder="**********"
                         value={values.password}
                         onChange={changeHandler}
                         autoComplete="on" />

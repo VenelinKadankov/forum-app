@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     const authenticationService = authService(auth);
 
     const onLoginSubmit = async (data) => {
+        console.log(data);
         const response = await authenticationService.login(data);
 
         if(response){
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const onRegisterSubmit = async (data) => {
+        console.log(data);
         const response = await authenticationService.register(data);
 
         if(response){

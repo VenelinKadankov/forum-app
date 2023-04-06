@@ -1,35 +1,56 @@
 import { Button } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useForm } from '../../hooks/useForm';
 
 import styles from './Register.module.css';
 
+const initialValues = { username: '', password: '', confirmPassword: '' };
+
 export const RegisterUser = () => {
+    const { onRegisterSubmit } = useAuthContext();
+    const { values, changeHandler, onSubmit } = useForm(initialValues, onRegisterSubmit);
+
     return (
         <div className={styles.registerAreaFlex}>
-            <Form className={styles.registerArea}>
-                <Form.Group className="mb-3" controlId="formUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="username" placeholder="Enter username" autoComplete='on' />
-                    <Form.Text className="text-muted">
+            <form className={styles.registerArea} method="POST" onSubmit={onSubmit}>
+                <div className="mb-3" id="formUsername">
+                    <label>Username</label>
+                    <input name="username"
+                        className={styles.inputArea}
+                        type="username"
+                        placeholder="Enter username"
+                        value={values.username}
+                        onChange={changeHandler} />
+                    <label className="text-muted">
                         The username you will be using on the forum.
-                    </Form.Text>
-                </Form.Group>
+                    </label>
+                </div>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password"  autoComplete='on'/>
-                </Form.Group>
+                <div className="mb-3" id="formPassword">
+                    <label>Password</label>
+                    <input name="password"
+                        className={styles.inputArea}
+                        type="password"
+                        placeholder="Password"
+                        value={values.password}
+                        onChange={changeHandler} />
+                </div>
 
-                <Form.Group className="mb-3" controlId="formConfirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm Password"  autoComplete='on' />
-                </Form.Group>
+                <div className="mb-3" id="formConfirmPassword">
+                    <label>Confirm Password</label>
+                    <input name="confirmPassword"
+                        className={styles.inputArea}
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={values.confirmPassword}
+                        onChange={changeHandler} />
+                </div>
                 <Button variant="primary" type="submit">
                     Register
                 </Button>
                 <Link className={styles.goToLogin} to="/login">Login</Link>
-            </Form>
+            </form>
         </div>
     );
 }
