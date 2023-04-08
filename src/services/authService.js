@@ -2,16 +2,19 @@ import { apiLinks } from "../common/apiLinks";
 import { requestService } from "./requestService";
 
 export const authService = (token) => {
-    token = localStorage.getItem('auth');
+    // token = localStorage.getItem('auth');
     const url = apiLinks('auth');
     const service = requestService(token);
 
     const login = async (data) => {
         try {
-            await service.post(`${url.baseUrl}/login`, data);
+
+            console.log("IN THE LOGIN");
+
+            return await service.post(`${url.baseUrl}/login`, data);
         } catch (error) {
             try {
-                await service.post(`${url.secondaryUrl}/login`, data);
+                return await service.post(`${url.secondaryUrl}/login`, data);
             } catch (error) {
                 console.log('ERROR LOGIN');
             }
@@ -20,10 +23,10 @@ export const authService = (token) => {
 
     const register = async (data) => {
         try {
-            await service.post(`${url.baseUrl}/register`, data);
+            return await service.post(`${url.baseUrl}/register`, data);
         } catch (error) {
             try {
-                await service.post(`${url.secondaryUrl}/register`, data);
+                return await service.post(`${url.secondaryUrl}/register`, data);
             } catch (error) {
                 console.log('ERROR REGISTER');
             }

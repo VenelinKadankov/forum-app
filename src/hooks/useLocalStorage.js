@@ -1,13 +1,16 @@
 import { useState } from "react";
 
 export const useLocalStorage = (key, initialValue) => {
-    const [value, setValue] = useState(initialValue);
+    const [value, setValue] = useState(() => {
+        const authStorage = localStorage.getItem(key);
+        if (authStorage) {
+            const auth = JSON.parse(authStorage);
 
-    const kvp = localStorage.getItem(key);
+           return auth;
+        }
 
-    if (kvp) {
-        setValue(JSON.parse(kvp));
-    }
+        return initialValue;
+    });
 
     const setTokenInStorage = (newValue) => {
         setValue(newValue);

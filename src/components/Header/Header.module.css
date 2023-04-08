@@ -19,6 +19,7 @@
   border-radius: 7px;
   margin: 0 5px;
   text-decoration: none;
+  min-width: 10rem;
 }
 
 .navLogo {

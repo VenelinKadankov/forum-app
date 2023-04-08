@@ -14,6 +14,7 @@ import { Catalog } from './components/Themes/Catalog';
 import { serviceFactory } from './services/serviceFactory';
 import { Create } from './components/Themes/Create';
 import { AuthProvider } from './contexts/AuthContext';
+import { Logout } from './components/User/Logout';
 
 function App() {
     const themeService = serviceFactory('theme');
@@ -41,26 +42,29 @@ function App() {
     // }
 
     return (
-        <>
-            <AuthProvider>
+        <AuthProvider>
 
-                <div className="App">
-                    <Header />
-                    <div className="main">
-                        <Routes>
-                            <Route path='*' element={<h1>404</h1>} />
-                            <Route path='/' element={<Home topics={topics} />}></Route>
-                            <Route path='/register' element={<RegisterUser />}></Route>
-                            <Route path='/login' element={<LoginUser />}></Route>
-                            <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
-                            <Route path='/create' element={<Create />}></Route>
-                        </Routes>
-                    </div>
-                    <Footer />
+            <div className="App">
+                
+                <Header />
+
+                <div className="main">
+                    <Routes>
+                        <Route path='*' element={<h1>404</h1>} />
+                        <Route path='/' element={<Home topics={topics} />}></Route>
+                        <Route path='/register' element={<RegisterUser />}></Route>
+                        <Route path='/login' element={<LoginUser />}></Route>
+                        <Route path='/logout' element={<Logout />}></Route>
+                        <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
+                        <Route path='/create' element={<Create />}></Route>
+                    </Routes>
                 </div>
 
-            </AuthProvider>
-        </>
+                <Footer />
+
+            </div>
+
+        </AuthProvider>
     );
 }
 

@@ -9,10 +9,9 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
 
-    const authenticationService = authService(auth);
+    const authenticationService = authService(auth.token);
 
     const onLoginSubmit = async (data) => {
-        console.log(data);
         const response = await authenticationService.login(data);
 
         if(response){
@@ -23,7 +22,6 @@ export const AuthProvider = ({ children }) => {
     }
 
     const onRegisterSubmit = async (data) => {
-        console.log(data);
         const response = await authenticationService.register(data);
 
         if(response){
@@ -49,9 +47,9 @@ export const AuthProvider = ({ children }) => {
         onLoginSubmit,
         onRegisterSubmit,
         onLogoutSubmit,
-        userId: auth._id,
+        userId: auth.id,
         token: auth.token,
-        username: auth.username,
+        username: auth.userName,
         isAuthenticated,
     };
 

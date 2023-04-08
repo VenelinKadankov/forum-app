@@ -8,11 +8,11 @@ const initialValues = { username: '', password: '' };
 
 export const LoginUser = () => {
     const { onLoginSubmit } = useAuthContext();
-    const { values, changeHandler, onSubmit } = useForm(initialValues, onLoginSubmit);
+    const { values, changeHandler, onFormSubmit } = useForm(initialValues, onLoginSubmit);
 
     return (
         <div className={styles.loginAreaFlex}>
-            <form className={styles.loginArea} method="POST" onSubmit={onSubmit}>
+            <form className={styles.loginArea} method="POST" onSubmit={onFormSubmit}>
                 <div className="mb-3">
                     <label>Username</label>
                     <input className={styles.inputArea}
