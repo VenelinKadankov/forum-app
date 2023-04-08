@@ -1,6 +1,7 @@
-const requester = async (token, method, url, data ) => {
+const requester = async (auth, method, url, data) => {
     const options = {};
     options.method = method;
+    // options.headers = {};
 
     if (method !== 'GET') {
         options.headers = {
@@ -10,10 +11,11 @@ const requester = async (token, method, url, data ) => {
         options.body = JSON.stringify(data);
     }
 
-    if (token && options.headers) {
+    if (auth && auth.token) {
         options.headers = {
             ...options.headers,
-            'Authorization': token,
+            'Authorization': auth.token,
+            'uid': auth.id,
         };
     }
 
@@ -34,15 +36,18 @@ export const getToken = () => {
     }
 }
 
-export const requestService = (token) => {
-    if (!token) {
-        token = getToken();
+export const requestService = (auth) => {
+
+    if (!auth) {
+        let auth = {};
+        auth.token = getToken();
+        auth = auth.token === undefined ? undefined : auth;
     }
 
     return {
-        get: requester.bind(null, token, 'GET'),
-        post: requester.bind(null, token, 'POST'),
-        put: requester.bind(null, token, 'PUT'),
-        delete: requester.bind(null, token, 'DELETE'),
+        get: requester.bind(null, auth, 'GET'),
+        post: requester.bind(null, auth, 'POST'),
+        put: requester.bind(null, auth, 'PUT'),
+        delete: requester.bind(null, auth, 'DELETE'),
     }
 }

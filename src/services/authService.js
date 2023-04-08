@@ -1,16 +1,13 @@
 import { apiLinks } from "../common/apiLinks";
 import { requestService } from "./requestService";
 
-export const authService = (token) => {
+export const authService = (auth) => {
     // token = localStorage.getItem('auth');
     const url = apiLinks('auth');
-    const service = requestService(token);
+    const service = requestService(auth);
 
     const login = async (data) => {
         try {
-
-            console.log("IN THE LOGIN");
-
             return await service.post(`${url.baseUrl}/login`, data);
         } catch (error) {
             try {
@@ -35,10 +32,10 @@ export const authService = (token) => {
 
     const logout = async () => {
         try {
-            await service.get(`${url.baseUrl}/logout`);
+            return await service.get(`${url.baseUrl}/logout`);
         } catch (error) {
             try {
-                await service.post(`${url.secondaryUrl}/logout`);
+                return await service.get(`${url.secondaryUrl}/logout`);
             } catch (error) {
                 console.log('ERROR LOGOUT');
             }

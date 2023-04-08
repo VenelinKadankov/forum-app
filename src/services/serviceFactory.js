@@ -1,8 +1,8 @@
 import { requestService } from './requestService';
 import { apiLinks } from '../common/apiLinks';
 
-export const serviceFactory = (typeService, token) => {
-    const request = requestService(token);
+export const serviceFactory = (typeService, auth) => {
+    const request = requestService(auth);
     const {baseUrl, secondaryUrl} = apiLinks(typeService);
 
     const getAll = async () => {

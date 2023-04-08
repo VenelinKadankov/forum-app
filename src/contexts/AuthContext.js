@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
     const navigate = useNavigate();
 
-    const authenticationService = authService(auth.token);
+    const authenticationService = authService(auth);
 
     const onLoginSubmit = async (data) => {
         const response = await authenticationService.login(data);
