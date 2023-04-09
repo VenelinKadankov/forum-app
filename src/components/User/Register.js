@@ -9,11 +9,11 @@ const initialValues = { username: '', password: '', confirmPassword: '' };
 
 export const RegisterUser = () => {
     const { onRegisterSubmit } = useAuthContext();
-    const { values, changeHandler, onSubmit } = useForm(initialValues, onRegisterSubmit);
+    const { values, changeHandler, onFormSubmit } = useForm(initialValues, onRegisterSubmit);
 
     return (
         <div className={styles.registerAreaFlex}>
-            <form className={styles.registerArea} method="POST" onSubmit={onSubmit}>
+            <form className={styles.registerArea} method="POST" onSubmit={onFormSubmit}>
                 <div className="mb-3" id="formUsername">
                     <label>Username</label>
                     <input name="username"
@@ -21,7 +21,8 @@ export const RegisterUser = () => {
                         type="username"
                         placeholder="Enter username"
                         value={values.username}
-                        onChange={changeHandler} />
+                        onChange={changeHandler}
+                        autoComplete="off" />
                     <label className="text-muted">
                         The username you will be using on the forum.
                     </label>
@@ -34,7 +35,8 @@ export const RegisterUser = () => {
                         type="password"
                         placeholder="Password"
                         value={values.password}
-                        onChange={changeHandler} />
+                        onChange={changeHandler}
+                        autoComplete="off" />
                 </div>
 
                 <div className="mb-3" id="formConfirmPassword">
@@ -44,7 +46,8 @@ export const RegisterUser = () => {
                         type="password"
                         placeholder="Confirm Password"
                         value={values.confirmPassword}
-                        onChange={changeHandler} />
+                        onChange={changeHandler}
+                        autoComplete="off" />
                 </div>
                 <Button variant="primary" type="submit">
                     Register
