@@ -12,9 +12,11 @@ export const Header = () => {
     return (
         <Nav defaultActiveKey="/" as="ul" className={styles.header}>
             <div id='allUsersNavLinks' className={styles.headerItem}>
-                <NavLink className={styles.navLogo} to="/"><img src={logo} className={styles.logo} alt='logo' /></NavLink>
-                <NavLink className={styles.navItem} to="/">Home</NavLink>
-                <NavLink className={styles.navItem} to="/contacts">Contacts</NavLink>
+                <div className={styles.headerItem}>
+                    <NavLink className={styles.navLogo} to="/"><img src={logo} className={styles.logo} alt='logo' /></NavLink>
+                    <NavLink className={styles.navItem} to="/">Home</NavLink>
+                    <NavLink className={styles.navItem} to="/contacts">Contacts</NavLink>
+                </div>
                 {!isAuthenticated
                     ?
                     <div id='unloggedNavLinks' className={styles.headerItem}>

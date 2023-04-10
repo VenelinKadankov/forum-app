@@ -18,7 +18,7 @@ export const RegisterUser = () => {
                     <label>Username</label>
                     <input name="username"
                         className={styles.inputArea}
-                        type="username"
+                        type="text"
                         placeholder="Enter username"
                         value={values.username}
                         onChange={changeHandler}

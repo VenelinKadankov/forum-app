@@ -1,3 +1,20 @@
+# TODO: When the token time expires it is throwing an error for seemingly logged in users. FIX THAT.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

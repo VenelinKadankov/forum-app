@@ -8,7 +8,7 @@ export const serviceFactory = (typeService, auth) => {
     const getAll = async () => {
 
         try {
-            const response = await request.get(baseUrl);
+            const response = await request.get(`${baseUrl}/all`);
 
             if (response) {
                 const result = Object.values(response);
@@ -17,7 +17,7 @@ export const serviceFactory = (typeService, auth) => {
             }
         } catch (error) {
             try {
-                const response = await request.get(secondaryUrl);
+                const response = await request.get(`${secondaryUrl}/all`);
 
                 if (response) {
                     const result = Object.values(response);
@@ -32,15 +32,24 @@ export const serviceFactory = (typeService, auth) => {
     };
 
     const getOne = async (id) => {
-        const response = await request.get(`${baseUrl}/${id}`);
+        const response = await request.get(`${baseUrl}/get`);
 
         if (response) {
             return Object.values(response);
         }
     };
 
+    const create = async (data) => {
+        const response = await request.post(`${baseUrl}/create`, data);
+
+        if (response) {
+            return Object.values(response);
+        }
+    }
+
     return {
         getAll,
-        getOne
+        getOne,
+        create,
     };
 }
