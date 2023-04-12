@@ -10,7 +10,7 @@ import styles from './Create.module.css';
 const initialValues = { title: '', description: '', topicTitle: '', creatorId: '' }
 
 export const Create = () => {
-    const { userId, auth } = useAuthContext();
+    const { userId } = useAuthContext();
     const navigate = useNavigate();
 
     if(!userId){

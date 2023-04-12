@@ -16,11 +16,9 @@ import { Create } from './components/Themes/Create';
 import { AuthProvider } from './contexts/AuthContext';
 import { Logout } from './components/User/Logout';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeDetails } from './components/Themes/ThemeDetails';
 
 function App() {
-    const themeService = serviceFactory('theme');
-    const [themes, setThemes] = useState([]);
-
     const topicService = serviceFactory('topic');
     const [topics, setTopics] = useState([]);
 
@@ -31,13 +29,6 @@ function App() {
             });
     }, []);
 
-    useEffect(() => {
-        themeService.getAll()
-            .then(res => {
-                setThemes(res)
-            });
-    }, []);
-
     // const onLoginSubmit = (e) => {
     //     console.log("SUBMITTED LOGIN");
     // }
@@ -45,7 +36,6 @@ function App() {
     return (
         <AuthProvider>
             <ThemeProvider>
-
 
                 <div className="App">
 
@@ -58,7 +48,8 @@ function App() {
                             <Route path='/register' element={<RegisterUser />}></Route>
                             <Route path='/login' element={<LoginUser />}></Route>
                             <Route path='/logout' element={<Logout />}></Route>
-                            <Route path='/catalog' element={<Catalog themes={themes} />}></Route>
+                            <Route path='/catalog' element={<Catalog />}></Route>
+                            <Route path='/catalog/:themeId' element={<ThemeDetails />}></Route>
                             <Route path='/create' element={<Create />}></Route>
                         </Routes>
                     </div>
@@ -66,6 +57,7 @@ function App() {
                     <Footer />
 
                 </div>
+
             </ThemeProvider>
         </AuthProvider>
     );

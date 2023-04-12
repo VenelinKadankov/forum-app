@@ -8,38 +8,35 @@ export const authService = (auth) => {
 
     const login = async (data) => {
         try {
-            return await service.post(`${url.baseUrl}/login`, data);
+            
+            console.log(auth);
+
+            return await service.post(`${url.baseUrl}/login`, {uid: auth.id}, data);
         } catch (error) {
-            try {
-                return await service.post(`${url.secondaryUrl}/login`, data);
-            } catch (error) {
-                console.log('ERROR LOGIN');
-            }
+            window.alert('ERROR LOGIN');
+            // console.log('ERROR LOGIN');
         }
+
     };
 
     const register = async (data) => {
         try {
-            return await service.post(`${url.baseUrl}/register`, data);
+            return await service.post(`${url.baseUrl}/register`, {}, data);
         } catch (error) {
-            try {
-                return await service.post(`${url.secondaryUrl}/register`, data);
-            } catch (error) {
-                console.log('ERROR REGISTER');
-            }
+            window.alert('ERROR REGISTER');
+            // console.log('ERROR REGISTER');
         }
+
     };
 
     const logout = async () => {
         try {
             return await service.get(`${url.baseUrl}/logout`);
         } catch (error) {
-            try {
-                return await service.get(`${url.secondaryUrl}/logout`);
-            } catch (error) {
-                console.log('ERROR LOGOUT');
-            }
+            window.alert('ERROR LOGOUT');
+            // console.log('ERROR LOGOUT');
         }
+
     };
 
     return {

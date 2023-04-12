@@ -1,10 +1,11 @@
-const requester = async (auth, method, url, data) => {
+const requester = async (auth, method, url, headers = null, data = null) => {
     const options = {};
     options.method = method;
-    // options.headers = {};
+    options.headers = headers ? headers : {};
 
     if (method !== 'GET') {
         options.headers = {
+            ...headers,
             'content-type': 'application/json',
         };
 
@@ -13,6 +14,7 @@ const requester = async (auth, method, url, data) => {
 
     if (auth && auth.token) {
         options.headers = {
+            ...headers,
             ...options.headers,
             'Authorization': auth.token,
             'uid': auth.id,
@@ -32,7 +34,7 @@ export const getToken = () => {
     const auth = localStorage.getItem('auth');
 
     if (auth) {
-        return JSON.stringify(auth).token;
+        return JSON.parse(auth).token;
     }
 }
 

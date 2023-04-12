@@ -10,13 +10,18 @@ export const ThemeProvider = ({ children }) => {
 
     const { id, userName, token } = useAuthContext();
 
+    // console.log(id);
+
     const auth = { id, userName, token }
     const service = themeService(auth);
 
     const onCreateSubmit = async (data) => {
 
         try {
-            const response = await service.create(data);
+            const response = await service.create({uid: id}, data);
+
+            console.log(response);
+
             if (!response) {
                 window.alert('There was a problem creating the theme. Try again.');
                 navigate('/create');
