@@ -1,22 +1,11 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from 'react';
-
-import { serviceFactory } from '../../services/serviceFactory';
 
 import { TopicCard } from "../Topics/TopicCard";
 
 import styles from './Home.module.css';
 
-export const Home = () => {
-    const topicService = serviceFactory('topic');
-    const [topics, setTopics] = useState([]);
+export const Home = ({topics}) => {
 
-    useEffect(() => {
-        topicService.getAll()
-            .then(res => {
-                setTopics(res);
-            });
-    }, [topicService]);
 
     return (
         <section>

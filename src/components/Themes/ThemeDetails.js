@@ -22,7 +22,7 @@ export const ThemeDetails = () => {
                 console.log(res);
                 setTheme(res)
             });
-    }, [themeId, service]);
+    }, [themeId]);
 
     
     const [show, setShow] = useState(false);

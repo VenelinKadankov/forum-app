@@ -2,6 +2,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import { serviceFactory } from './services/serviceFactory';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { Header } from './components/Header/Header';
@@ -16,6 +19,15 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeDetails } from './components/Themes/ThemeDetails';
 
 function App() {
+    const topicService = serviceFactory('topic');
+    const [topics, setTopics] = useState([]);
+
+    useEffect(() => {
+        topicService.getAll()
+            .then(res => {
+                setTopics(res);
+            });
+    }, []);
 
     return (
         <AuthProvider>
@@ -28,7 +40,7 @@ function App() {
                     <div className="main">
                         <Routes>
                             <Route path='*' element={<h1>404</h1>} />
-                            <Route path='/' element={<Home />}></Route>
+                            <Route path='/' element={<Home topics={topics} />}></Route>
                             <Route path='/register' element={<RegisterUser />}></Route>
                             <Route path='/login' element={<LoginUser />}></Route>
                             <Route path='/logout' element={<Logout />}></Route>
