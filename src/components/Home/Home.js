@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+
+import { serviceFactory } from '../../services/serviceFactory';
+
 import { TopicCard } from "../Topics/TopicCard";
 
 import styles from './Home.module.css';
 
-export const Home = ({ topics }) => {
+export const Home = () => {
+    const topicService = serviceFactory('topic');
+    const [topics, setTopics] = useState([]);
+
+    useEffect(() => {
+        topicService.getAll()
+            .then(res => {
+                setTopics(res);
+            });
+    }, [topicService]);
+
     return (
         <section>
             <div className={styles.home}>

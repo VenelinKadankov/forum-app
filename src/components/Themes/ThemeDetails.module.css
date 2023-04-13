@@ -1,0 +1,47 @@
+.themeDetailsPage{
+    margin: 4rem;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    border-bottom: 1px solid #6e7781;
+    border-top: 1px solid #6e7781;
+}
+
+.answerBtn{
+    text-decoration: none;
+    margin-left: 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+    border: solid 1px #0d6efd;
+    color: white;
+    background-color: #0d6efd;
+}
+
+.answerBtn:hover{
+    background-color: #3a87fb;
+}
+
+.answersArea{
+    /* border-bottom: 1px solid #6e7781; */
+    border-top: 1px solid #6e7781;
+}
+
+.themeData{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: start; */
+    /* align-items: center; */
+}
+
+
+.themeDataItem{
+    width: 100%;
+    text-align: start;
+}
+
+.userInfo{
+    text-align: end;
+}
