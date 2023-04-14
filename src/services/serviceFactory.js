@@ -57,6 +57,26 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
         }
     }
 
+    const edit = async (initialHeaders = null, data) => {
+        const requestHeaders = unifyHeaders(headers, initialHeaders);
+
+        const response = await request.post(`${baseUrl}/edit`, requestHeaders, data);
+
+        if (response) {
+            return response;
+        }
+    }
+
+    const createInternalElement = async (initialHeaders = null, data, uri) => {
+        const requestHeaders = unifyHeaders(headers, initialHeaders);
+
+        const response = await request.put(`${baseUrl}/create${uri}`, requestHeaders, data);
+
+        if (response) {
+            return response;
+        }
+    }
+
     const unifyHeaders = (headers, initialHeaders) => {
         return {
             ...headers,
@@ -68,5 +88,7 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
         getAll,
         getOne,
         create,
+        edit,
+        createInternalElement,
     };
 }

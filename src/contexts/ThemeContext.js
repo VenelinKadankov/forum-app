@@ -18,9 +18,9 @@ export const ThemeProvider = ({ children }) => {
     const onCreateSubmit = async (data) => {
 
         try {
-            const response = await service.create({uid: id}, data);
+            const response = await service.create({ uid: id }, data);
 
-            console.log(response);
+            // console.log(response);
 
             if (!response) {
                 window.alert('There was a problem creating the theme. Try again.');
@@ -49,9 +49,26 @@ export const ThemeProvider = ({ children }) => {
         }
     }
 
+    const onCreateAnswerSubmit = async (data) => {
+        try {
+            const response = await service.createInternalElement({ uid: id }, data, '/answer');
+
+            if (!response) {
+                window.alert('There was a problem with your request. Try again.');
+                navigate(`/catalog/${data.id}`);
+            }
+
+            navigate(`/catalog/${response.id}`);
+        } catch (error) {
+            window.alert('There was a problem with your request. Try again.');
+            navigate('/catalog');
+        }
+    }
+
     const contextValues = {
         onCreateSubmit,
         onEditSubmit,
+        onCreateAnswerSubmit,
     };
 
     return (

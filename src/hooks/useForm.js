@@ -1,23 +1,29 @@
 import { useState } from 'react';
 
-export const useForm = (initialValues, onSubmitHandler) => {
+export const useForm = (initialValues, onSubmitHandler, closeHandler = null, ) => {
     const [values, setValues] = useState(initialValues);
 
     const changeHandler = (e) => {
-        setValues(state => ({...state, [e.target.name]: e.target.value}));
+        setValues(state => ({ ...state, [e.target.name]: e.target.value }));
+
+        console.log(values);
     };
 
     const onFormSubmit = (e) => {
         e.preventDefault();
 
         onSubmitHandler(values);
-        
+
         setValues(initialValues);
+
+        if (closeHandler) {
+            closeHandler();
+        }
     };
 
     const changeValues = (newValues) => {
         // TODO: Validate newValues shape (like initialValues)
-        
+
         setValues(newValues);
     };
 
