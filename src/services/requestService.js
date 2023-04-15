@@ -10,6 +10,7 @@ const requester = async (auth, method, url, headers = null, data = null) => {
         };
 
         options.body = JSON.stringify(data);
+        console.log(options.body);
     }
 
     if (auth && auth.token) {

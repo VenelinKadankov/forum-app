@@ -1,62 +1,50 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import { useEffect, useReducer, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import { useAuthContext } from "../../contexts/AuthContext";
-import { useThemeContext } from "../../contexts/ThemeContext";
-import { themeService } from "../../services/themeService";
-import { useForm } from "../../hooks/useForm";
+import { useAuthContext } from '../../contexts/AuthContext';
+import { themeService } from '../../services/themeService';
+import { answerService } from '../../services/answerService';
+import { themeReducer } from '../../reducers/themeReducer';
+
+import { AddAnswer } from '../../Answers/CreateAnswer';
 
 import styles from './ThemeDetails.module.css';
 
-const initialValuesTheme = { id: '', title: '', description: '', creatorId: '', topicTitle: '', answers:[] }
-const initialValuesAnswer = { title: '', description: '', creatorId: '', themeId: '' }
-
 export const ThemeDetails = () => {
     const { themeId } = useParams();
-    const { auth, userId } = useAuthContext();
-    const service = themeService(auth, { tId: themeId, uid: userId });
+    const { auth, userId, isAuthenticated, username } = useAuthContext();
 
-    const [theme, setTheme] = useState({});
+    const serviceThemes = themeService(auth, { tId: themeId, uid: userId });
+    const serviceAnswers = answerService(auth, { tId: themeId, uid: userId });
+
+    const [theme, dispatch] = useReducer(themeReducer, {});
 
     useEffect(() => {
-        service.getOne({ tId: themeId })
+        serviceThemes.getOne({ tId: themeId })
             .then(res => {
-                setTheme(res)
+                const themeState = { ...res };
+                dispatch({ type: 'THEME_FETCH', payload: themeState })
             });
     }, [themeId]);
 
+    const onAnswerSubmit = async (values) => {
+        values.themeId = themeId;
+        values.title = theme.title;
+
+        const response = await serviceAnswers.create({ tId: themeId, uid: userId }, values);
+
+        dispatch({
+            type: 'ANSWER_ADD',
+            payload: response,
+            username: username,
+        });
+
+        handleClose();
+    };
 
     const [show, setShow] = useState(false);
-
-    const { onEditSubmit, onCreateAnswerSubmit } = useThemeContext();
-    // const onSubmitAnswer = (data) => {
-    //     console.log("SUBMITTED ANSWER");
-
-    //     onCreateAnswerSubmit();
-
-    //     handleClose();
-    // }
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    console.log(theme);
-
-    initialValuesTheme.id = themeId;
-    initialValuesTheme.title = theme.title;
-    initialValuesTheme.description = theme.description;
-    initialValuesTheme.creatorId = theme.creatorId;
-    initialValuesTheme.topicTitle = theme.topicTitle;
-    initialValuesTheme.answers = theme.answers;
-
-    initialValuesAnswer.themeId = themeId;
-    initialValuesAnswer.creatorId = userId;
-    initialValuesAnswer.title = theme.title;
-
-    const { values, changeHandler, onFormSubmit } = useForm(initialValuesTheme, onEditSubmit, handleClose);
 
     return (
         <>
@@ -74,6 +62,13 @@ export const ThemeDetails = () => {
                     <br></br>
                     <div className={styles.answersArea}>
                         <p>All the answers will be here.</p>
+                        {/* <p>{theme.answers}</p> */}
+                        {theme.answers && theme.answers.map(x => (
+                            <div key={x.id} className={styles.commentCard}>
+                                <p>{x.creator}: {x.description}</p>
+                            </div>
+                        ))}
+
                         <Link>Comment</Link>
                     </div>
                     <br></br>
@@ -83,45 +78,7 @@ export const ThemeDetails = () => {
                 </section>
             </section>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{theme.title}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="name@example.com"
-                  autoFocus
-                />
-              </Form.Group> */}
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                        >
-                            <Form.Label>Write your answer</Form.Label>
-                            <textarea rows={5}
-                                name="description"
-                                className={styles.inputArea}
-                                type="text"
-                                placeholder="Description"
-                                value={values?.answers?.at(-1)?.description}
-                                onChange={changeHandler}
-                                autoComplete="off" />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={onFormSubmit}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {isAuthenticated ? <AddAnswer onAnswerSubmit={onAnswerSubmit} theme={theme} handleClose={handleClose} show={show} /> : window.alert('Login first')}
         </>
     );
 }

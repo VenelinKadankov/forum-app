@@ -60,7 +60,8 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
     const edit = async (initialHeaders = null, data) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
-        const response = await request.post(`${baseUrl}/edit`, requestHeaders, data);
+        // console.log(data);
+        const response = await request.put(`${baseUrl}/edit`, requestHeaders, data);
 
         if (response) {
             return response;

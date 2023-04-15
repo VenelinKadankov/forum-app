@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
         userId: auth.id,
         token: auth.token,
         username: auth.userName,
+        auth : auth,
         isAuthenticated,
     };
 
