@@ -12,7 +12,7 @@ import styles from './ThemeDetails.module.css';
 
 export const ThemeDetails = () => {
     const { themeId } = useParams();
-    const { auth, userId, isAuthenticated, username } = useAuthContext();
+    const { auth, userId, isAuthenticated } = useAuthContext();
 
     const serviceThemes = themeService(auth, { tId: themeId, uid: userId });
     const serviceAnswers = answerService(auth, { tId: themeId, uid: userId });
@@ -36,7 +36,6 @@ export const ThemeDetails = () => {
         dispatch({
             type: 'ANSWER_ADD',
             payload: response.answers,
-            // username: username,
         });
 
         handleClose();
@@ -61,7 +60,6 @@ export const ThemeDetails = () => {
                     </div>
                     <br></br>
                     <div className={styles.answersArea}>
-                        {/* <p>{theme.answers}</p> */}
                         {theme.answers && theme.answers?.map(x => (
                             <div key={x.id} className={styles.commentCard}>
                                 <p>{x.description}</p>
