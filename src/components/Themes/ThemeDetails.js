@@ -35,8 +35,8 @@ export const ThemeDetails = () => {
 
         dispatch({
             type: 'ANSWER_ADD',
-            payload: response,
-            username: username,
+            payload: response.answers,
+            // username: username,
         });
 
         handleClose();
@@ -61,19 +61,21 @@ export const ThemeDetails = () => {
                     </div>
                     <br></br>
                     <div className={styles.answersArea}>
-                        <p>All the answers will be here.</p>
                         {/* <p>{theme.answers}</p> */}
-                        {theme.answers && theme.answers.map(x => (
+                        {theme.answers && theme.answers?.map(x => (
                             <div key={x.id} className={styles.commentCard}>
-                                <p>{x.creator}: {x.description}</p>
+                                <p>{x.description}</p>
+                                <p className={styles.creatorData}>Answer by - {x.creator}</p>
+                                <div className={styles.commentLinkDiv}>
+                                    <Link className={styles.commentLink}>Comment</Link>
+                                </div>
                             </div>
                         ))}
 
-                        <Link>Comment</Link>
                     </div>
                     <br></br>
                 </section>
-                <section>
+                <section className={styles.sectionAnswerBtn}>
                     <button onClick={handleShow} className={styles.answerBtn}>Answer</button>
                 </section>
             </section>

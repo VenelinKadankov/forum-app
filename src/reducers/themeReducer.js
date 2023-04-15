@@ -5,16 +5,17 @@ export const themeReducer = (state, action) => {
         case 'THEME_FETCH':
             return { ...action.payload };
         case 'ANSWER_ADD':
+            console.log(action.payload);
             return {
                 ...state,
                 answers: [
                     ...state.answers,
                     {
                         ...action.payload,
-                        creator: {
-                            id: action.id,
-                            username: action.username,
-                        }
+                        // creator: {
+                        //     id: action.id,
+                        //     username: action.username,
+                        // }
                     }
                 ],
             }
@@ -26,10 +27,10 @@ export const themeReducer = (state, action) => {
                     comments: [
                         {
                             ...action.payload,
-                            creator: {
-                                id: action.id,
-                                username: action.username,
-                            }
+                            // creator: {
+                            //     id: action.id,
+                            //     username: action.username,
+                            // }
                         }
                     ],
                 }
