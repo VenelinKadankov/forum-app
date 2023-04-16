@@ -53,8 +53,8 @@ export const ThemeDetails = () => {
 
     const [showComment, setShowComment] = useState(false);
     const handleCloseComment = () => {
-        clickedAnswer = {};
         setShowComment(false);
+        clickedAnswer = {};
     }
     const handleShowComment = (answer) => {
         clickedAnswer = answer;
@@ -62,11 +62,12 @@ export const ThemeDetails = () => {
     }
 
     const onCommentSubmit = async (values) => {
-        values.forumAnswerId = clickedAnswer.answerId;
+        values.forumAnswerId = clickedAnswer.id;
         values.title = theme.title;
 
-        console.log('FROM HANDLER----------');
-        console.log(values);
+        // console.log(clickedAnswer);
+        // console.log('FROM HANDLER----------');
+        // console.log(values);
 
         const response = await serviceComments.create(headersDetailChange, values);
 
