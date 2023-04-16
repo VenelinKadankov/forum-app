@@ -2,15 +2,11 @@ import { apiLinks } from "../common/apiLinks";
 import { requestService } from "./requestService";
 
 export const authService = (auth) => {
-    // token = localStorage.getItem('auth');
     const url = apiLinks('auth');
     const service = requestService(auth);
 
     const login = async (data) => {
         try {
-            
-            console.log(auth);
-
             return await service.post(`${url.baseUrl}/login`, {uid: auth.id}, data);
         } catch (error) {
             window.alert('ERROR LOGIN');

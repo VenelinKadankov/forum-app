@@ -12,6 +12,7 @@ export const themeReducer = (state, action) => {
             return {
                 ...state,
                 answers: [...state.answers],
+                // TODO: needs work here
                 comments: [...action.payload],
             }
         default:

@@ -1,0 +1,45 @@
+.inputArea {
+    width: 80%;
+}
+
+.formSubmitComment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modalFooter{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.submitBtn{
+    text-decoration: none;
+    margin-left: 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+    border: solid 1px #0d6efd;
+    color: white;
+    background-color: #0d6efd;
+}
+
+.submitBtn:hover{
+    color: white;
+    background-color: #438efe;
+}
+
+.goBackBtn{
+    text-decoration: none;
+    margin-left: 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+}
+
+.goBackBtn:hover{
+    color: white;
+    background-color: #0d6efd;
+}

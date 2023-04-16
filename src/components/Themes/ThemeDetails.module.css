@@ -15,8 +15,8 @@
     margin-left: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .answerBtn{
@@ -46,6 +46,7 @@
 
 .creatorData{
     text-align: right;
+    margin-bottom: 0;
 }
 
 .commentLinkDiv{
@@ -56,7 +57,9 @@
 }
 
 .commentLink{
-    text-decoration: none;
+    background-color: white;
+    border: none;
+    color: #0d6efd;
 }
 
 .themeData{

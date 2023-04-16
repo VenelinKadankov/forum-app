@@ -15,6 +15,11 @@ export const apiLinks = (requestFor) => {
                 baseUrl: 'http://localhost:5108/api/answer',
                 secondaryUrl: 'https://localhost:44350/api/answer',
             }
+        case 'comment':
+            return {
+                baseUrl: 'http://localhost:5108/api/comment',
+                secondaryUrl: 'https://localhost:44350/api/comment',
+            }
         case 'auth':
             return {
                 baseUrl: 'http://localhost:5108/api/user',

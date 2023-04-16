@@ -1,21 +1,27 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useAuthContext } from '../../contexts/AuthContext';
 import { themeService } from '../../services/themeService';
 import { answerService } from '../../services/answerService';
+import { commentService } from '../../services/commentService';
 import { themeReducer } from '../../reducers/themeReducer';
 
 import { AddAnswer } from '../../Answers/CreateAnswer';
+import { AddComment } from '../../Comments/CreateComment';
 
 import styles from './ThemeDetails.module.css';
+
+let clickedAnswer = {};
 
 export const ThemeDetails = () => {
     const { themeId } = useParams();
     const { auth, userId, isAuthenticated } = useAuthContext();
+    const headersDetailChange = { tId: themeId, uid: userId };
 
-    const serviceThemes = themeService(auth, { tId: themeId, uid: userId });
-    const serviceAnswers = answerService(auth, { tId: themeId, uid: userId });
+    const serviceThemes = themeService(auth, headersDetailChange);
+    const serviceAnswers = answerService(auth, headersDetailChange);
+    const serviceComments = commentService(auth, headersDetailChange);
 
     const [theme, dispatch] = useReducer(themeReducer, {});
 
@@ -31,7 +37,7 @@ export const ThemeDetails = () => {
         values.themeId = themeId;
         values.title = theme.title;
 
-        const response = await serviceAnswers.create({ tId: themeId, uid: userId }, values);
+        const response = await serviceAnswers.create(headersDetailChange, values);
 
         dispatch({
             type: 'ANSWER_ADD',
@@ -45,6 +51,33 @@ export const ThemeDetails = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [showComment, setShowComment] = useState(false);
+    const handleCloseComment = () => {
+        clickedAnswer = {};
+        setShowComment(false);
+    }
+    const handleShowComment = (answer) => {
+        clickedAnswer = answer;
+        setShowComment(true);
+    }
+
+    const onCommentSubmit = async (values) => {
+        values.forumAnswerId = clickedAnswer.answerId;
+        values.title = theme.title;
+
+        console.log('FROM HANDLER----------');
+        console.log(values);
+
+        const response = await serviceComments.create(headersDetailChange, values);
+
+        dispatch({
+            type: 'COMMENT_ADD',
+            payload: response.answers,
+        });
+
+        handleCloseComment();
+    };
+
     return (
         <>
             <h1>Details page</h1>
@@ -54,18 +87,27 @@ export const ThemeDetails = () => {
                     <div>
                         <label className={styles.themeTitle}>{theme.topic}</label>
                         <h2 className={styles.themeTitle}>{theme.title}</h2>
-                        <div className={styles.themeDataItem}><p>{theme.topic}</p></div>
-                        <div className={styles.themeDataItem}><p>{theme.description}</p></div>
-                        <div className={styles.themeDataItem}><p className={styles.userInfo}>Posted by {theme.creatorName} on {theme.createdOn}</p></div>
+                        <div className={styles.themeDataItem}>
+                            <p>{theme.topic}</p>
+                        </div>
+                        <div className={styles.themeDataItem}>
+                            <p>{theme.description}</p>
+                        </div>
+                        <div className={styles.themeDataItem}>
+                            <p className={styles.userInfo}>Posted by {theme.creatorName} on {theme.createdOn}</p>
+                        </div>
                     </div>
                     <br></br>
                     <div className={styles.answersArea}>
                         {theme.answers && theme.answers?.map(x => (
                             <div key={x.id} className={styles.commentCard}>
                                 <p>{x.description}</p>
-                                <p className={styles.creatorData}>Answer by - {x.creator}</p>
+                                <div>
+                                    <p className={styles.creatorData}>Answered on - {x.createdOn}</p>
+                                    <p className={styles.creatorData}>By - {x.creator}</p>
+                                </div>
                                 <div className={styles.commentLinkDiv}>
-                                    <Link className={styles.commentLink}>Comment</Link>
+                                    <button className={styles.commentLink} onClick={() => handleShowComment(x)}>Comment</button>
                                 </div>
                             </div>
                         ))}
@@ -78,7 +120,20 @@ export const ThemeDetails = () => {
                 </section>
             </section>
 
-            {isAuthenticated ? <AddAnswer onAnswerSubmit={onAnswerSubmit} theme={theme} handleClose={handleClose} show={show} /> : window.alert('Login first')}
+            {isAuthenticated ?
+                <AddAnswer onAnswerSubmit={onAnswerSubmit}
+                    theme={theme}
+                    handleClose={handleClose}
+                    show={show} /> :
+                window.alert('Login first')}
+
+            {isAuthenticated ?
+                <AddComment onCommentSubmit={onCommentSubmit}
+                    theme={theme}
+                    answer={clickedAnswer}
+                    handleCloseComment={handleCloseComment}
+                    showComment={showComment} /> :
+                window.alert('Login first')}
         </>
     );
 }
