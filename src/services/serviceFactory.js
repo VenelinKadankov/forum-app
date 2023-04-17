@@ -71,6 +71,7 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
     const remove = async (initialHeaders = null, id) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
+        console.log("BEFORE REQUEST");
         const response = await request.delete(`${baseUrl}/delete`, requestHeaders, id);
 
         if (response) {

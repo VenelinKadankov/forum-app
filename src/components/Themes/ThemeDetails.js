@@ -66,16 +66,31 @@ export const ThemeDetails = () => {
         values.title = theme.title;
 
         const response = await serviceComments.create(headersDetailChange, values);
-        console.log(response);
 
         dispatch({
             type: 'COMMENT_ADD',
             payload: response.answers,
-            answerId : values.forumAnswerId,
+            answerId: values.forumAnswerId,
         });
 
         handleCloseComment();
     };
+
+    const deleteAnswerHandler = async (answer) => {
+        //TODO: Same problem with click time violation.
+        window.confirm('Are you sure you want to delete this answer?');
+        headersDetailChange = {
+            ...headersDetailChange,
+            aId: answer.id,
+        }
+
+        const response = await serviceAnswers.remove(headersDetailChange, answer.id);
+
+        dispatch({
+            type: 'ANSWER_REMOVE',
+            payload: response.answers,
+        });
+    }
 
     const deleteCommentHandler = async (commentId, answer) => {
         //TODO: This confirm is causing "[Violation] 'click' handler took 929ms" warning for delay, if time is enough fix it(maybe another modal)
@@ -90,7 +105,7 @@ export const ThemeDetails = () => {
         dispatch({
             type: 'COMMENT_REMOVE',
             payload: response.answers,
-            answerContainingComment : answer,
+            answerContainingComment: answer,
         });
     }
 
@@ -100,7 +115,7 @@ export const ThemeDetails = () => {
 
             <section className={styles.themeDetailsPage}>
                 <section className={styles.themeData}>
-                    <div>
+                    <div className={styles.forumThemeDetails}>
                         <label className={styles.themeTitle}>{theme.topic}</label>
                         <h2 className={styles.themeTitle}>{theme.title}</h2>
                         <div className={styles.themeDataItem}>
@@ -119,18 +134,32 @@ export const ThemeDetails = () => {
                             <div key={x.id} className={styles.answerCard}>
                                 <p>{x.description}</p>
                                 <div className={styles.creatorDiv}>
-                                    <p className={styles.creatorData}>Answered on - {x.createdOn}</p>
-                                    <p className={styles.creatorData}>By - {x.creator}</p>
+                                    <div className={styles.creatorDataAnswer}>
+                                        {userId === x.creatorId &&
+                                            <button
+                                                className={styles.deleteCommentBtn}
+                                                onClick={() => deleteAnswerHandler(x)}>
+                                                Delete
+                                            </button>}
+                                    </div>
+                                    <div>
+                                        <p className={styles.creatorDataAnswer}>Answered on - {x.createdOn}</p>
+                                        <p className={styles.creatorDataAnswer}>By - {x.creator}</p>
+                                    </div>
                                 </div>
 
                                 {x.answerComments && x.answerComments.map(c => (
                                     <div key={c.id} className={styles.commentBox}>
                                         <p>{c.description}</p>
-                                        <p className={styles.creatorData}>
+                                        <div className={styles.creatorDataComment}>
                                             {userId === c.creatorId &&
-                                                <button className={styles.deleteCommentBtn} onClick={() => deleteCommentHandler(c.id, x)}>Delete</button>}
-                                            {c.creator}
-                                        </p>
+                                                <button
+                                                    className={styles.deleteCommentBtn}
+                                                    onClick={() => deleteCommentHandler(c.id, x)}>
+                                                    Delete
+                                                </button>}
+                                            <p>{c.creator}</p>
+                                        </div>
                                     </div>
                                 ))}
 
