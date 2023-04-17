@@ -68,6 +68,16 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
         }
     }
 
+    const remove = async (initialHeaders = null, id) => {
+        const requestHeaders = unifyHeaders(headers, initialHeaders);
+
+        const response = await request.delete(`${baseUrl}/delete`, requestHeaders, id);
+
+        if (response) {
+            return response;
+        }
+    }
+
     const createInternalElement = async (initialHeaders = null, data, uri) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
@@ -90,6 +100,7 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
         getOne,
         create,
         edit,
+        remove,
         createInternalElement,
     };
 }

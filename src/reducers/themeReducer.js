@@ -15,6 +15,13 @@ export const themeReducer = (state, action) => {
                 // TODO: needs work here
                 comments: [...action.payload],
             }
+        case 'COMMENT_REMOVE':
+            return {
+                ...state,
+                answers: [...state.answers],
+                // TODO: needs work here
+                comments: [...action.payload],
+            }
         default:
             return state;
     }

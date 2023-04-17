@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 import styles from './CreateComment.module.css';
 
-
 export const AddComment = ({
     onCommentSubmit,
     theme,

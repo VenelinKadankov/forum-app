@@ -17,7 +17,7 @@ let clickedAnswer = {};
 export const ThemeDetails = () => {
     const { themeId } = useParams();
     const { auth, userId, isAuthenticated } = useAuthContext();
-    const headersDetailChange = { tId: themeId, uid: userId };
+    let headersDetailChange = { tId: themeId, uid: userId };
 
     const serviceThemes = themeService(auth, headersDetailChange);
     const serviceAnswers = answerService(auth, headersDetailChange);
@@ -65,11 +65,8 @@ export const ThemeDetails = () => {
         values.forumAnswerId = clickedAnswer.id;
         values.title = theme.title;
 
-        // console.log(clickedAnswer);
-        // console.log('FROM HANDLER----------');
-        // console.log(values);
-
         const response = await serviceComments.create(headersDetailChange, values);
+        console.log(response);
 
         dispatch({
             type: 'COMMENT_ADD',
@@ -78,6 +75,22 @@ export const ThemeDetails = () => {
 
         handleCloseComment();
     };
+
+    const deleteCommentHandler = async (commentId) => {
+        window.confirm('Are you sure you want to delete this comment?');
+        headersDetailChange = {
+            ...headersDetailChange,
+            cId: commentId,
+        }
+
+        const response = await serviceComments.remove(headersDetailChange, commentId);
+        console.log(response);
+
+        dispatch({
+            type: 'COMMENT_REMOVE',
+            payload: response.answers,
+        });
+    }
 
     return (
         <>
@@ -101,12 +114,24 @@ export const ThemeDetails = () => {
                     <br></br>
                     <div className={styles.answersArea}>
                         {theme.answers && theme.answers?.map(x => (
-                            <div key={x.id} className={styles.commentCard}>
+                            <div key={x.id} className={styles.answerCard}>
                                 <p>{x.description}</p>
-                                <div>
+                                <div className={styles.creatorDiv}>
                                     <p className={styles.creatorData}>Answered on - {x.createdOn}</p>
                                     <p className={styles.creatorData}>By - {x.creator}</p>
                                 </div>
+
+                                {x.answerComments && x.answerComments.map(c => (
+                                    <div key={c.id} className={styles.commentBox}>
+                                        <p>{c.description}</p>
+                                        <p className={styles.creatorData}>
+                                            {userId === c.creatorId &&
+                                                <button className={styles.deleteCommentBtn} onClick={() => deleteCommentHandler(c.id)}>Delete</button>}
+                                            {c.creator}
+                                        </p>
+                                    </div>
+                                ))}
+
                                 <div className={styles.commentLinkDiv}>
                                     <button className={styles.commentLink} onClick={() => handleShowComment(x)}>Comment</button>
                                 </div>
