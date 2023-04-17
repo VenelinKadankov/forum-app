@@ -9,18 +9,38 @@ export const themeReducer = (state, action) => {
                 answers: [...action.payload],
             }
         case 'COMMENT_ADD':
+            let changedAnswersAfterAdd = [...action.payload];
+
+            changedAnswersAfterAdd.forEach(ans => {
+
+                if(ans.id === action.answerId){
+
+                    console.log(ans.answerComments);
+
+                    ans.answerComments = [...ans.answerComments]
+                }
+            });
+            
             return {
                 ...state,
-                answers: [...state.answers],
-                // TODO: needs work here
-                comments: [...action.payload],
+                answers: [...changedAnswersAfterAdd],
             }
         case 'COMMENT_REMOVE':
+            let changedAnswers = [...action.payload];
+
+            changedAnswers.forEach(ans => {
+
+                if(ans.id === action.answerContainingComment.id){
+
+                    console.log(ans.answerComments);
+
+                    ans.answerComments = [...ans.answerComments]
+                }
+            });
+
             return {
                 ...state,
-                answers: [...state.answers],
-                // TODO: needs work here
-                comments: [...action.payload],
+                answers: [...changedAnswers],
             }
         default:
             return state;

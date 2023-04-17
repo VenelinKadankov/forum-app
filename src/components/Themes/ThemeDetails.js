@@ -71,12 +71,14 @@ export const ThemeDetails = () => {
         dispatch({
             type: 'COMMENT_ADD',
             payload: response.answers,
+            answerId : values.forumAnswerId,
         });
 
         handleCloseComment();
     };
 
-    const deleteCommentHandler = async (commentId) => {
+    const deleteCommentHandler = async (commentId, answer) => {
+        //TODO: This confirm is causing "[Violation] 'click' handler took 929ms" warning for delay, if time is enough fix it(maybe another modal)
         window.confirm('Are you sure you want to delete this comment?');
         headersDetailChange = {
             ...headersDetailChange,
@@ -84,11 +86,11 @@ export const ThemeDetails = () => {
         }
 
         const response = await serviceComments.remove(headersDetailChange, commentId);
-        console.log(response);
 
         dispatch({
             type: 'COMMENT_REMOVE',
             payload: response.answers,
+            answerContainingComment : answer,
         });
     }
 
@@ -126,7 +128,7 @@ export const ThemeDetails = () => {
                                         <p>{c.description}</p>
                                         <p className={styles.creatorData}>
                                             {userId === c.creatorId &&
-                                                <button className={styles.deleteCommentBtn} onClick={() => deleteCommentHandler(c.id)}>Delete</button>}
+                                                <button className={styles.deleteCommentBtn} onClick={() => deleteCommentHandler(c.id, x)}>Delete</button>}
                                             {c.creator}
                                         </p>
                                     </div>
