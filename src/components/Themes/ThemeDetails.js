@@ -156,7 +156,7 @@ export const ThemeDetails = () => {
                                 <p>{x.description}</p>
                                 <div className={styles.creatorDiv}>
                                     <div className={styles.creatorDataAnswer}>
-                                        {userId === x.creatorId &&
+                                        {(isAuthenticated && userId === x.creatorId) &&
                                             <button
                                                 className={styles.deleteCommentBtn}
                                                 onClick={() => deleteAnswerHandler(x)}>
@@ -183,10 +183,10 @@ export const ThemeDetails = () => {
                                         </div>
                                     </div>
                                 ))}
-
-                                <div className={styles.commentLinkDiv}>
+                                {isAuthenticated && <div className={styles.commentLinkDiv}>
                                     <button className={styles.commentLink} onClick={() => handleShowComment(x)}>Comment</button>
-                                </div>
+                                </div>}
+
                             </div>
                         ))}
 

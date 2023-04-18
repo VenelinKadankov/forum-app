@@ -19,6 +19,7 @@ import { Logout } from './components/User/Logout';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeDetails } from './components/Themes/ThemeDetails';
 import { RouteGuard } from './components/Guards/RouteGuard';
+import { Contacts } from './components/Contacts/Contacts';
 
 function App() {
     const topicService = serviceFactory('topic');
@@ -42,16 +43,17 @@ function App() {
                     <div className="main">
                         <Routes>
                             <Route path='*' element={<h1>404</h1>} />
-                            <Route path='/' element={<Home topics={topics} />}></Route>
-                            <Route path='/register' element={<RegisterUser />}></Route>
-                            <Route path='/login' element={<LoginUser />}></Route>
-                            <Route path='/logout' element={<Logout />}></Route>
-                            <Route path='/catalog' element={<Catalog />}></Route>
-                            <Route path='/catalog/:themeId' element={<ThemeDetails />}></Route>
+                            <Route path='/' element={<Home topics={topics} />} />
+                            <Route path='/register' element={<RegisterUser />} />
+                            <Route path='/login' element={<LoginUser />} />
+                            <Route path='/logout' element={<Logout />} />
+                            <Route path='/catalog' element={<Catalog />} />
+                            <Route path='/catalog/:themeId' element={<ThemeDetails />} />
                             <Route element={<RouteGuard />}>
-                                <Route path='/create' element={<Create />}></Route>
+                                <Route path='/create' element={<Create />} />
                                 <Route path='/edit/:themeId' element={<Edit />} />
                             </Route>
+                            <Route path="/contacts" element={<Contacts />} />
                         </Routes>
                     </div>
 

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import logo from '../../logo1.svg';
 
 import { AuthContext } from '../../contexts/AuthContext';
+
 import styles from './Header.module.css';
 
 export const Header = () => {
