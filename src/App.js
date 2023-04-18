@@ -20,6 +20,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeDetails } from './components/Themes/ThemeDetails';
 import { RouteGuard } from './components/Guards/RouteGuard';
 import { Contacts } from './components/Contacts/Contacts';
+import { Participations } from './components/User/Participations';
 
 function App() {
     const topicService = serviceFactory('topic');
@@ -52,6 +53,7 @@ function App() {
                             <Route element={<RouteGuard />}>
                                 <Route path='/create' element={<Create />} />
                                 <Route path='/edit/:themeId' element={<Edit />} />
+                                <Route path='/participations' element={<Participations />} />
                             </Route>
                             <Route path="/contacts" element={<Contacts />} />
                         </Routes>

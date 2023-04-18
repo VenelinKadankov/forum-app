@@ -33,6 +33,25 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
         return [];
     };
 
+    const getAllForUser = async (initialHeaders = null) => {
+        const requestHeaders = unifyHeaders(headers, initialHeaders);
+
+        try {
+            const response = await request.get(`${baseUrl}/allForUser`, requestHeaders);
+
+            if (response) {
+                const result = Object.values(response);
+
+                return result;
+            }
+
+        } catch (error) {
+            console.log('LOG FROM ERROR' + error);
+        }
+
+        return [];
+    };
+
     const getOne = async (initialHeaders = null) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
@@ -94,6 +113,7 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
 
     return {
         getAll,
+        getAllForUser,
         getOne,
         create,
         edit,

@@ -1,0 +1,20 @@
+.participationBtns{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.partBtn{
+    text-decoration: none;
+    margin-left: 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+    border: solid 1px #0d6efd;
+    color: white;
+    background-color: #0d6efd;
+}
+
+.partBtn:hover{
+    background-color: #3a87fb;
+}
