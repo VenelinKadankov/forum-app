@@ -14,15 +14,19 @@ import styles from './Edit.module.css';
 export const Edit = () => {
     const { userId, auth } = useAuthContext();
     const { themeId } = useParams();
-    let headersDetailChange = { tId: themeId, uid: userId };
+    let headersDetailChange = { uid: userId, tId: themeId };
 
     const serviceThemes = themeService(auth, headersDetailChange);
     const [theme, setTheme] = useState({});
 
-
     useEffect(() => {
         serviceThemes.getOne({ tId: themeId })
             .then(res => {
+                
+                res.answers.forEach(answer => {
+                    answer.themeId = res.id;
+                });
+                
                 setTheme(res);
                 changeValues(res);
             });

@@ -32,10 +32,8 @@ export const ThemeProvider = ({ children }) => {
 
     const onEditSubmit = async (data) => {
         try {
-            // console.log(data.id);
-            // console.log(userId);
+            const response = await service.edit({ uid: userId, tId: data.id }, data);
 
-            const response = await service.edit({ tId: data.id, uid: userId }, data);
             if (!response) {
                 window.alert('There was a problem editting the theme. Try again.');
                 navigate(`/edit/${response.id}`);
@@ -44,7 +42,7 @@ export const ThemeProvider = ({ children }) => {
             navigate(`/catalog/${response.id}`);
         } catch (error) {
             window.alert('There was a problem editting the theme. Try again.');
-            navigate(0);
+            navigate('/catalog');
         }
     }
 
