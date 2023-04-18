@@ -17,11 +17,9 @@ const requester = async (auth, method, url, headers = null, data = null) => {
             ...headers,
             ...options.headers,
             'Authorization': auth.token,
-            'uid': auth.userId,
+            'uid': auth.id,
         };
     }
-
-    console.log(options);
 
     const response = await fetch(url, options);
 

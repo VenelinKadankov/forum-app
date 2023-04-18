@@ -8,9 +8,8 @@ export const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
     const navigate = useNavigate();
 
-    const { userId, userName, token } = useAuthContext();
+    const { userId, auth } = useAuthContext();
 
-    const auth = { userId, userName, token }
     const service = themeService(auth);
 
     const onCreateSubmit = async (data) => {
