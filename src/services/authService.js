@@ -5,11 +5,9 @@ export const authService = (auth) => {
     const url = apiLinks('auth');
     const service = requestService(auth);
 
-    // console.log(auth);
-
     const login = async (data) => {
         try {
-            return await service.post(`${url.baseUrl}/login`, {uid: auth.id}, data);
+            return await service.post(`${url.baseUrl}/login`, { uid: auth.id }, data);
         } catch (error) {
             window.alert('ERROR LOGIN');
             // console.log('ERROR LOGIN');

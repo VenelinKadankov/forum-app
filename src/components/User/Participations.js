@@ -6,9 +6,10 @@ import { answerService } from '../../services/answerService';
 import { commentService } from '../../services/commentService';
 
 import styles from "./Participations.module.css"
+import { ParticipationsCard } from './ParticipationsCard';
 
 export const Participations = () => {
-    const { auth, userId, isAuthenticated } = useAuthContext();
+    const { auth, userId } = useAuthContext();
 
     let headersDetailChange = { uid: userId };
 
@@ -21,7 +22,6 @@ export const Participations = () => {
     const serviceComments = commentService(auth, headersDetailChange);
 
     const [showThemes, setShowThemes] = useState(true);
-    const handleCloseThemes = () => setShowThemes(false);
     const handleShowThemes = () => {
         setShowAnswers(false);
         setShowComments(false);
@@ -29,7 +29,6 @@ export const Participations = () => {
     }
 
     const [showAnswers, setShowAnswers] = useState(false);
-    const handleCloseAnswers = () => setShowAnswers(false);
     const handleShowAnswers = () => {
         setShowThemes(false);
         setShowComments(false);
@@ -37,7 +36,6 @@ export const Participations = () => {
     }
 
     const [showComments, setShowComments] = useState(false);
-    const handleCloseComments = () => setShowComments(false);
     const handleShowComments = () => {
         setShowThemes(false);
         setShowAnswers(false);
@@ -47,8 +45,6 @@ export const Participations = () => {
     useEffect(() => {
         serviceThemes.getAllForUser({ uid: userId })
             .then(res => {
-                setAnswers([]);
-                setComments([]);
                 setThemes(res);
             });
     }, [userId]);
@@ -56,8 +52,6 @@ export const Participations = () => {
     useEffect(() => {
         serviceAnswers.getAllForUser({ uid: userId })
             .then(res => {
-                setThemes([]);
-                setComments([]);
                 setAnswers(res);
             });
     }, [userId]);
@@ -65,22 +59,30 @@ export const Participations = () => {
     useEffect(() => {
         serviceComments.getAllForUser({ uid: userId })
             .then(res => {
-                setThemes([]);
-                setAnswers([]);
                 setComments(res);
             });
     }, [userId]);
 
     return (
-        <>
-        <div className={styles.participationBtns}>
-            <button className={styles.partBtn} onClick={handleShowThemes}>My themes</button>
-            <button className={styles.partBtn} onClick={handleShowAnswers}>My answers</button>
-            <button className={styles.partBtn} onClick={handleShowComments}>My comments</button>
+        <div className={styles.participationsArea}>
+            <div className={styles.participationBtns}>
+                <button className={styles.partBtn} onClick={handleShowThemes}>My themes</button>
+                <button className={styles.partBtn} onClick={handleShowAnswers}>My answers</button>
+                <button className={styles.partBtn} onClick={handleShowComments}>My comments</button>
+            </div>
+            <div className={styles.participationItems}>
+                {showThemes && themes.map(x => (
+                    <ParticipationsCard key={x.id} item={x} typeWanted={'Theme'} themeId={x.id} />
+                ))}
+
+                {showAnswers && answers.map(x => (
+                    <ParticipationsCard key={x.id} item={x} typeWanted={'Answer'} themeId={x.themeId} />
+                ))}
+
+                {showComments && comments.map(x => (
+                    <ParticipationsCard key={x.id} item={x} typeWanted={'Comment'} themeId={x.relatedAnswerId} />
+                ))}
+            </div>
         </div>
-        {showThemes && <p>Themes</p>}
-        {showAnswers && <p>Answers</p>}
-        {showComments && <p>Comments</p>}
-        </>
     )
 }

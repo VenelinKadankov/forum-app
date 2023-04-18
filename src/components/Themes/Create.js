@@ -32,7 +32,11 @@ export const Create = () => {
                         placeholder="Enter title"
                         value={values.title}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off"
+                        errorMessage="Title should be 4-255 characters and shouldn't include any special character!"
+                        label="Title"
+                        pattern="^[a-zA-Z0-9]{4,255}$"
+                        required/>
                     <label className="text-muted">
                         The theme title.
                     </label>
@@ -46,7 +50,11 @@ export const Create = () => {
                         placeholder="Description"
                         value={values.description}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off"
+                        errorMessage="Description should be 10-5000 characters and shouldn't include any special character!"
+                        label="Description"
+                        pattern="^[a-zA-Z0-9]{10,5000}$"
+                        required/>
                 </div>
 
                 <div className="mb-3" id="themeTopic">
@@ -57,7 +65,11 @@ export const Create = () => {
                         placeholder="Theme Topic"
                         value={values.topicTitle}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off"
+                        errorMessage="Topic title should be 4-255 characters and shouldn't include any special character!"
+                        label="Topic"
+                        pattern="^[a-zA-Z0-9]{4,255}$"
+                        required/>
                 </div>
                 <Button variant="primary" type="submit">
                     Create

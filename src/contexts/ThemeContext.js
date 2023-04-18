@@ -1,5 +1,6 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { themeService } from '../services/themeService';
 import { useAuthContext } from './AuthContext';
 
@@ -7,10 +8,17 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
     const navigate = useNavigate();
-
+    const [themes, setThemes] = useState([]);
     const { userId, auth } = useAuthContext();
 
-    const service = themeService(auth);
+    const service = themeService(auth, { uid: userId });
+
+    useEffect(() => {
+        service.getAll()
+            .then(result => {
+                setThemes(result);
+            })
+    }, []);
 
     const onCreateSubmit = async (data) => {
 
@@ -61,10 +69,16 @@ export const ThemeProvider = ({ children }) => {
         }
     }
 
+    const getOne = (themeId) => {
+        return themes.find(t => t.id === themeId);
+    }
+
     const contextValues = {
         onCreateSubmit,
         onEditSubmit,
         onCreateAnswerSubmit,
+        getOne,
+        themes
     };
 
     return (

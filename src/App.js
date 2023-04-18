@@ -21,6 +21,7 @@ import { ThemeDetails } from './components/Themes/ThemeDetails';
 import { RouteGuard } from './components/Guards/RouteGuard';
 import { Contacts } from './components/Contacts/Contacts';
 import { Participations } from './components/User/Participations';
+import { OwnerGuard } from './components/Guards/OwnerGuard';
 
 function App() {
     const topicService = serviceFactory('topic');
@@ -47,12 +48,15 @@ function App() {
                             <Route path='/' element={<Home topics={topics} />} />
                             <Route path='/register' element={<RegisterUser />} />
                             <Route path='/login' element={<LoginUser />} />
-                            <Route path='/logout' element={<Logout />} />
                             <Route path='/catalog' element={<Catalog />} />
                             <Route path='/catalog/:themeId' element={<ThemeDetails />} />
                             <Route element={<RouteGuard />}>
+                                <Route path='/logout' element={<Logout />} />
                                 <Route path='/create' element={<Create />} />
-                                <Route path='/edit/:themeId' element={<Edit />} />
+                                <Route path='/edit/:themeId' element={
+                                    <OwnerGuard>
+                                        <Edit />
+                                    </OwnerGuard>} />
                                 <Route path='/participations' element={<Participations />} />
                             </Route>
                             <Route path="/contacts" element={<Contacts />} />

@@ -17,6 +17,7 @@ export const Header = () => {
                     <NavLink className={styles.navLogo} to="/"><img src={logo} className={styles.logo} alt='logo' /></NavLink>
                     <NavLink className={styles.navItem} to="/">Home</NavLink>
                     <NavLink className={styles.navItem} to="/contacts">Contacts</NavLink>
+                    <NavLink className={styles.navItem} to="/catalog">Catalog</NavLink>
                 </div>
                 {!isAuthenticated
                     ?
@@ -27,7 +28,6 @@ export const Header = () => {
                     :
                     <div className={styles.headerItem}>
                         <NavLink className={styles.navItem} to="/create">Start new</NavLink>
-                        <NavLink className={styles.navItem} to="/catalog">Catalog</NavLink>
                         <NavLink className={styles.navItem} to="/participations">My corner</NavLink>
                         <NavLink className={styles.navItem} to="/logout">Logout {username}</NavLink>
                     </div>

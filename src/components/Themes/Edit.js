@@ -22,11 +22,11 @@ export const Edit = () => {
     useEffect(() => {
         serviceThemes.getOne({ tId: themeId })
             .then(res => {
-                
+
                 res.answers.forEach(answer => {
-                    answer.themeId = res.id;
+                    answer.themeId = theme.id;
                 });
-                
+
                 setTheme(res);
                 changeValues(res);
             });
@@ -46,7 +46,11 @@ export const Edit = () => {
                         placeholder="Enter title"
                         value={values.title || ''}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off"
+                        errorMessage="Title should be 4-255 characters and shouldn't include any special character!"
+                        label="Title"
+                        pattern="^[a-zA-Z0-9]{4,255}$"
+                        required />
                     <label className="text-muted">
                         The theme title.
                     </label>
@@ -60,7 +64,11 @@ export const Edit = () => {
                         placeholder="Description"
                         value={values.description || ''}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off" 
+                        errorMessage="Description should be 10-5000 characters and shouldn't include any special character!"
+                        label="Description"
+                        pattern="^[a-zA-Z0-9]{10,5000}$"
+                        required/>
                 </div>
 
                 <div className="mb-3" id="themeTopic">
@@ -71,7 +79,11 @@ export const Edit = () => {
                         placeholder="Theme Topic"
                         value={values.topic || ''}
                         onChange={changeHandler}
-                        autoComplete="off" />
+                        autoComplete="off" 
+                        errorMessage="Topic title should be 4-255 characters and shouldn't include any special character!"
+                        label="Topic"
+                        pattern="^[a-zA-Z0-9]{4,255}$"
+                        required/>
                 </div>
                 <Button variant="primary" type="submit">
                     Edit

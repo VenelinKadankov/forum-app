@@ -209,7 +209,7 @@ export const ThemeDetails = () => {
                             className={styles.editBtn}>
                             Edit
                         </button>}
-                    {userId === theme.creatorId &&
+                    {(isAuthenticated && isOwner) &&
                         <button
                             className={styles.deleteThemeBtn}
                             onClick={deleteThemeHandler}>
