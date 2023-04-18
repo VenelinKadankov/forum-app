@@ -40,8 +40,6 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
 
         const response = await request.get(`${baseUrl}/get${searchParams}`, requestHeaders);
 
-        // console.log(response);
-
         if (response) {
             return response;
         }
@@ -60,7 +58,6 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
     const edit = async (initialHeaders = null, data) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
-        // console.log(data);
         const response = await request.put(`${baseUrl}/edit`, requestHeaders, data);
 
         if (response) {
@@ -71,7 +68,6 @@ export const serviceFactory = (typeService, auth, headers = null, paramsKVPs = n
     const remove = async (initialHeaders = null, id) => {
         const requestHeaders = unifyHeaders(headers, initialHeaders);
 
-        console.log("BEFORE REQUEST");
         const response = await request.delete(`${baseUrl}/delete`, requestHeaders, id);
 
         if (response) {

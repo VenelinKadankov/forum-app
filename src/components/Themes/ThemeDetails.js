@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import { useAuthContext } from '../../contexts/AuthContext';
 import { themeService } from '../../services/themeService';
@@ -7,8 +7,8 @@ import { answerService } from '../../services/answerService';
 import { commentService } from '../../services/commentService';
 import { themeReducer } from '../../reducers/themeReducer';
 
-import { AddAnswer } from '../../Answers/CreateAnswer';
-import { AddComment } from '../../Comments/CreateComment';
+import { AddAnswer } from '../Answers/CreateAnswer';
+import { AddComment } from '../Comments/CreateComment';
 
 import styles from './ThemeDetails.module.css';
 
@@ -16,6 +16,7 @@ let clickedAnswer = {};
 
 export const ThemeDetails = () => {
     const { themeId } = useParams();
+    const navigate = useNavigate();
     const { auth, userId, isAuthenticated } = useAuthContext();
     let headersDetailChange = { tId: themeId, uid: userId };
 
@@ -24,6 +25,8 @@ export const ThemeDetails = () => {
     const serviceComments = commentService(auth, headersDetailChange);
 
     const [theme, dispatch] = useReducer(themeReducer, {});
+
+    const isOwner = theme.creatorId === userId;
 
     useEffect(() => {
         serviceThemes.getOne({ tId: themeId })
@@ -109,6 +112,24 @@ export const ThemeDetails = () => {
         });
     }
 
+    const deleteThemeHandler = async () => {
+        // TODO: Same problem
+        window.confirm('Are you sure you want to delete this theme?');
+
+        await serviceThemes.remove(headersDetailChange, theme.id);
+
+        dispatch({
+            type: 'THEME_REMOVE',
+            payload: {},
+        });
+
+        navigate('/catalog');
+    }
+
+    const editThemeHandler = () => {
+        navigate(`/edit/${themeId}`);
+    }
+
     return (
         <>
             <h1>Details page</h1>
@@ -173,24 +194,42 @@ export const ThemeDetails = () => {
                     <br></br>
                 </section>
                 <section className={styles.sectionAnswerBtn}>
-                    <button onClick={handleShow} className={styles.answerBtn}>Answer</button>
+                    {!isAuthenticated &&
+                        <Link className={styles.loginRequired} to="/login">If you want to participate you should login.</Link>
+                    }
+                    {isAuthenticated &&
+                        <button
+                            onClick={handleShow}
+                            className={styles.answerBtn}>
+                            Answer
+                        </button>}
+                    {(isAuthenticated && isOwner) &&
+                        <button
+                            onClick={editThemeHandler}
+                            className={styles.editBtn}>
+                            Edit
+                        </button>}
+                    {userId === theme.creatorId &&
+                        <button
+                            className={styles.deleteThemeBtn}
+                            onClick={deleteThemeHandler}>
+                            Delete
+                        </button>}
                 </section>
             </section>
 
-            {isAuthenticated ?
+            {isAuthenticated &&
                 <AddAnswer onAnswerSubmit={onAnswerSubmit}
                     theme={theme}
                     handleClose={handleClose}
-                    show={show} /> :
-                window.alert('Login first')}
+                    show={show} />}
 
-            {isAuthenticated ?
+            {isAuthenticated &&
                 <AddComment onCommentSubmit={onCommentSubmit}
                     theme={theme}
                     answer={clickedAnswer}
                     handleCloseComment={handleCloseComment}
-                    showComment={showComment} /> :
-                window.alert('Login first')}
+                    showComment={showComment} />}
         </>
     );
 }

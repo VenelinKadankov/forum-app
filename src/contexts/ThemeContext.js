@@ -8,19 +8,15 @@ export const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
     const navigate = useNavigate();
 
-    const { id, userName, token } = useAuthContext();
+    const { userId, userName, token } = useAuthContext();
 
-    // console.log(id);
-
-    const auth = { id, userName, token }
+    const auth = { userId, userName, token }
     const service = themeService(auth);
 
     const onCreateSubmit = async (data) => {
 
         try {
-            const response = await service.create({ uid: id }, data);
-
-            // console.log(response);
+            const response = await service.create({ uid: userId }, data);
 
             if (!response) {
                 window.alert('There was a problem creating the theme. Try again.');
@@ -36,7 +32,10 @@ export const ThemeProvider = ({ children }) => {
 
     const onEditSubmit = async (data) => {
         try {
-            const response = await service.edit(data);
+            // console.log(data.id);
+            // console.log(userId);
+
+            const response = await service.edit({ tId: data.id, uid: userId }, data);
             if (!response) {
                 window.alert('There was a problem editting the theme. Try again.');
                 navigate(`/edit/${response.id}`);
@@ -51,7 +50,7 @@ export const ThemeProvider = ({ children }) => {
 
     const onCreateAnswerSubmit = async (data) => {
         try {
-            const response = await service.createInternalElement({ uid: id }, data, '/answer');
+            const response = await service.createInternalElement({ uid: userId }, data, '/answer');
 
             if (!response) {
                 window.alert('There was a problem with your request. Try again.');

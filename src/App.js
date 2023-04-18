@@ -14,9 +14,11 @@ import { LoginUser } from './components/User/Login';
 import { Footer } from './components/Footer/Footer';
 import { Catalog } from './components/Themes/Catalog';
 import { Create } from './components/Themes/Create';
+import { Edit } from './components/Themes/Edit';
 import { Logout } from './components/User/Logout';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeDetails } from './components/Themes/ThemeDetails';
+import { RouteGuard } from './components/Guards/RouteGuard';
 
 function App() {
     const topicService = serviceFactory('topic');
@@ -46,7 +48,10 @@ function App() {
                             <Route path='/logout' element={<Logout />}></Route>
                             <Route path='/catalog' element={<Catalog />}></Route>
                             <Route path='/catalog/:themeId' element={<ThemeDetails />}></Route>
-                            <Route path='/create' element={<Create />}></Route>
+                            <Route element={<RouteGuard />}>
+                                <Route path='/create' element={<Create />}></Route>
+                                <Route path='/edit/:themeId' element={<Edit />} />
+                            </Route>
                         </Routes>
                     </div>
 

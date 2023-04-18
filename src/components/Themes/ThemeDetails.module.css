@@ -3,7 +3,6 @@
     width: 90%;
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
     justify-content: center;
     gap: 2rem;
     border-bottom: 1px solid #6e7781;
@@ -12,7 +11,6 @@
 
 .sectionAnswerBtn{
     margin-top: 4rem;
-    /* margin-left: 2rem; */
     width: 20%;
     display: flex;
     flex-direction: column;
@@ -34,29 +32,61 @@
     background-color: #3a87fb;
 }
 
+.loginRequired{
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.loginRequired:hover{
+    color: #fd0d0d;
+}
+
 .deleteCommentBtn{
     text-decoration: none;
     margin-right: 2%;
     border-radius: 5px;
     padding: 0.3rem 1rem 0.6rem 1rem;
-    border: solid 1px #0d6efd;
+    border: solid 1px #fd0d0d;
     color: white;
-    background-color: #0d6efd;
+    background-color: #fd0d0d;
 }
 
 .deleteCommentBtn:hover{
-    background-color: #3a87fb;
+    background-color: #ff3b3b;
+}
+
+.deleteThemeBtn{
+    text-decoration: none;
+    margin: 2% 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+    border: solid 1px #fd0d0d;
+    color: white;
+    background-color: #fd0d0d;
+}
+
+.deleteThemeBtn:hover{
+    background-color: #ff3b3b;
+}
+
+.editBtn{
+    text-decoration: none;
+    margin: 3% 2% 1% 2%;
+    border-radius: 5px;
+    padding: 0.3rem 1rem 0.6rem 1rem;
+    border: solid 1px #fd910d;
+    color: white;
+    background-color: #fd910d;
+}
+
+.editBtn:hover{
+    background-color: #ffa230;
 }
 
 .answersArea{
-    /* border-bottom: 1px solid #6e7781; */
-    /* border-top: 1px solid #6e7781; */
     display: flex;
     flex-direction: column;
     gap:1rem;
-    /* align-items: start;
-    justify-content: start;
-    text-align: left; */
 }
 
 .creatorDiv{
@@ -96,8 +126,6 @@
     display: flex;
     flex-direction: column;
     width: 80%;
-    /* justify-content: start; */
-    /* align-items: center; */
 }
 
 .forumThemeDetails{
