@@ -47,7 +47,6 @@ export const Edit = () => {
                         value={values.title || ''}
                         onChange={changeHandler}
                         autoComplete="off"
-                        errorMessage="Title should be 4-255 characters and shouldn't include any special character!"
                         label="Title"
                         pattern="^[a-zA-Z0-9]{4,255}$"
                         required />
@@ -65,7 +64,6 @@ export const Edit = () => {
                         value={values.description || ''}
                         onChange={changeHandler}
                         autoComplete="off" 
-                        errorMessage="Description should be 10-5000 characters and shouldn't include any special character!"
                         label="Description"
                         pattern="^[a-zA-Z0-9]{10,5000}$"
                         required/>
@@ -80,7 +78,6 @@ export const Edit = () => {
                         value={values.topic || ''}
                         onChange={changeHandler}
                         autoComplete="off" 
-                        errorMessage="Topic title should be 4-255 characters and shouldn't include any special character!"
                         label="Topic"
                         pattern="^[a-zA-Z0-9]{4,255}$"
                         required/>
